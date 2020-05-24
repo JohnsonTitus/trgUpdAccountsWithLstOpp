@@ -1,0 +1,13 @@
+List<Account> accts = [select name, Type, (select name, stagename from Opportunities  where Stagename = 'Closed lost') from Account where type = 'Customer - Direct'];
+    
+	List<Account> acctsToUpd = new List<Account>();
+
+    for(Account acct : accts){
+        if(acct.opportunities.size() > 0){
+            
+            acct.type = 'Prospect';
+            acctsToUpd.add(acct);
+        }
+    }
+	
+	update acctsToUpd;
